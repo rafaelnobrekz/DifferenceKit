@@ -142,6 +142,12 @@ public extension UICollectionView {
         interrupt: ((Changeset<C>) -> Bool)? = nil,
         setData: (C) -> Void
         ) {
+        if #available(iOS 13, *){} else{
+            if let data = stagedChangeset.last?.data {
+                setData(data)
+                return reloadData()
+            }
+        }
         if case .none = window, let data = stagedChangeset.last?.data {
             setData(data)
             return reloadData()
